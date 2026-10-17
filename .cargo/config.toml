@@ -1,0 +1,5 @@
+# Cross-compilation toolchain for the Windows GNU target (used when building
+# Windows artifacts from macOS/Linux; harmless on Windows since MSVC is the
+# default host target there).
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-w64-mingw32-gcc"

@@ -1,0 +1,67 @@
+name: Release
+
+# Push a version tag (v0.1.0) to build and publish the GitHub release.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    name: macOS (universal)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rust toolchain
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+
+      - name: Package
+        run: ./scripts/package.sh --universal
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: |
+            dist/*.app.zip
+            dist/*.app.zip.sha256
+            dist/install.sh
+          if-no-files-found: error
+
+  windows:
+    name: Windows x64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Package
+        run: bash scripts/package.sh --windows
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: |
+            dist/*.zip
+            dist/*.zip.sha256
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    needs: [macos, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/* \
+            --title "not-a-vpn ${GITHUB_REF_NAME}" \
+            --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
