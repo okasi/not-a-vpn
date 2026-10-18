@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/icon-master.png" width="128" alt="not-a-vpn icon">
+</div>
+
 # 🕶️ not-a-vpn
 
 > It's not a VPN. It's a tiny menu-bar proxy that routes your traffic through
