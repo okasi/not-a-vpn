@@ -62,7 +62,7 @@ jobs:
 
       - name: Publish
         run: |
-          gh release create "${GITHUB_REF_NAME}" dist/* \
+          gh release create "${GITHUB_REF_NAME}" dist/*.zip dist/*.sha256 dist/install.sh \
             --repo "${GITHUB_REPOSITORY}" \
             --title "not-a-vpn ${GITHUB_REF_NAME}" \
             --generate-notes
