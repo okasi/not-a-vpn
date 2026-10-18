@@ -57,7 +57,7 @@ fn build_query(host: &str, qtype: u16) -> Result<Vec<u8>, String> {
         .unwrap_or(0x1234);
     msg.extend_from_slice(&id.to_be_bytes());
     msg.extend_from_slice(&0x0100_u16.to_be_bytes()); // RD
-    msg.extend_from_slice(&[0, 1, 0, 0, 0, 0, 0]); // QDCOUNT=1, rest 0
+    msg.extend_from_slice(&[0, 1, 0, 0, 0, 0, 0, 0]); // QDCOUNT=1, rest 0
     encode_qname(host, &mut msg)?;
     msg.extend_from_slice(&qtype.to_be_bytes());
     msg.extend_from_slice(&[0, 1]); // IN
@@ -161,6 +161,7 @@ pub async fn resolve(host: &str) -> Result<Vec<IpAddr>, String> {
 }
 
 async fn query(host: &str) -> Result<Vec<IpAddr>, String> {
+    // A/HTTPS first, fall back to AAAA when there is no IPv4 record yet.
     let mut addrs = query_once(host, 1).await?;
     if addrs.is_empty() {
         addrs = query_once(host, 28).await?;

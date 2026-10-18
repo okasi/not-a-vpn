@@ -14,7 +14,7 @@
 ## ✨ Features
 
 - 🔒 **Local HTTP proxy** bound to loopback, set as the system proxy with one click
-- 🌐 **DoH resolvers** with TLS + caching: AdGuard, Quad9, Control D, Cloudflare Security
+- 🌐 **DoH resolvers** with TLS + caching: AdGuard, Control D, Cloudflare Security
 - 🥷 **DPI evasion** modes: SNI split, small random split, multi-chunk — or off
 - 🍽️ **Menu-bar / tray UI**: enable, pick provider & evasion mode, quit
 - 🔁 **Autostart** and settings persistence (resume where you left off)

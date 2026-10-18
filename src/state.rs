@@ -25,18 +25,6 @@ pub const PROVIDERS: &[Provider] = &[
         ],
     },
     Provider {
-        id: "quad9",
-        name: "Quad9 DNS",
-        host: "dns11.quad9.net",
-        path: "/dns-query",
-        addrs: &[
-            "9.9.9.11",
-            "149.112.112.11",
-            "2620:fe::11",
-            "2620:fe::fe:11",
-        ],
-    },
-    Provider {
         id: "controld",
         name: "Control D",
         host: "freedns.controld.com",
