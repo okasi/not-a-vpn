@@ -53,6 +53,8 @@ jobs:
     needs: [macos, windows]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           path: dist
@@ -61,6 +63,7 @@ jobs:
       - name: Publish
         run: |
           gh release create "${GITHUB_REF_NAME}" dist/* \
+            --repo "${GITHUB_REPOSITORY}" \
             --title "not-a-vpn ${GITHUB_REF_NAME}" \
             --generate-notes
         env:
